@@ -1,0 +1,102 @@
+<%# ===== START PERSONALLY WRITTEN CODE ===== %>
+<%# View file: views/organiser/home.ejs. Renders server-side data provided by Express routes. %>
+<%- include('../partials/header', { title: title, active: active }) %>
+<%# Organiser summary panel: shows current site settings and top-level actions. %>
+<section class="page-title">
+    <p class="eyebrow">Organiser Home Page</p>
+    <h1><%= settings.site_name %></h1>
+    <p><%= settings.site_description %></p>
+    <div class="button-row">
+        <a class="button secondary" href="/organiser/settings">Site Settings Page</a>
+        <a class="button secondary" href="/organiser/audit">View Audit Log</a>
+        <form action="/organiser/events/new" method="post">
+            <button class="button primary" type="submit">Create New Event</button>
+        </form>
+    </div>
+</section>
+
+<%# Published event table: events visible to attendees, including sharing links and booking dashboard links. %>
+<section class="card">
+    <h2>Published Events</h2>
+    <% const publishedEvents = events.filter(event => event.status === 'published'); %>
+    <% if (publishedEvents.length === 0) { %>
+        <p>No events are currently published.</p>
+    <% } else { %>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Date</th>
+                        <th>Created / Published</th>
+                        <th>Tickets for sale</th>
+                        <th>Sharing link</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% publishedEvents.forEach(function(event) { %>
+                        <tr>
+                            <td><strong><%= event.title %></strong><br><span class="muted"><%= event.description.slice(0, 90) %><%= event.description.length > 90 ? '...' : '' %></span></td>
+                            <td><%= formatDateTime(event.event_date) %></td>
+                            <td>Created: <%= formatDateTime(event.created_at) %><br>Published: <%= formatDateTime(event.published_at) %></td>
+                            <td>Full: <%= event.full_price_quantity %> at <%= formatMoney(event.full_price_price) %><br>Concession: <%= event.concession_quantity %> at <%= formatMoney(event.concession_price) %></td>
+                            <td><a href="/attendee/events/<%= event.event_id %>">/attendee/events/<%= event.event_id %></a></td>
+                            <td class="actions">
+                                <a class="button small" href="/organiser/events/<%= event.event_id %>/edit">Edit</a>
+                                <a class="button small" href="/organiser/events/<%= event.event_id %>/bookings">Bookings</a>
+                                <form action="/organiser/events/<%= event.event_id %>/delete" method="post" onsubmit="return confirm('Delete this event?');">
+                                    <button class="button small danger" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    <% } %>
+</section>
+
+<%# Draft event table: organiser can edit, publish, or delete events before public release. %>
+<section class="card">
+    <h2>Draft Events</h2>
+    <% const draftEvents = events.filter(event => event.status === 'draft'); %>
+    <% if (draftEvents.length === 0) { %>
+        <p>No draft events are currently waiting to be published.</p>
+    <% } else { %>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Date</th>
+                        <th>Created / Updated</th>
+                        <th>Tickets for sale</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% draftEvents.forEach(function(event) { %>
+                        <tr>
+                            <td><strong><%= event.title %></strong><br><span class="muted"><%= event.description.slice(0, 90) %><%= event.description.length > 90 ? '...' : '' %></span></td>
+                            <td><%= formatDateTime(event.event_date) %></td>
+                            <td>Created: <%= formatDateTime(event.created_at) %><br>Updated: <%= formatDateTime(event.updated_at) %></td>
+                            <td>Full: <%= event.full_price_quantity %> at <%= formatMoney(event.full_price_price) %><br>Concession: <%= event.concession_quantity %> at <%= formatMoney(event.concession_price) %></td>
+                            <td class="actions">
+                                <a class="button small" href="/organiser/events/<%= event.event_id %>/edit">Edit</a>
+                                <form action="/organiser/events/<%= event.event_id %>/publish" method="post">
+                                    <button class="button small primary" type="submit">Publish</button>
+                                </form>
+                                <form action="/organiser/events/<%= event.event_id %>/delete" method="post" onsubmit="return confirm('Delete this draft?');">
+                                    <button class="button small danger" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    <% } %>
+</section>
+<%- include('../partials/footer') %>
+<%# ===== END PERSONALLY WRITTEN CODE ===== %>

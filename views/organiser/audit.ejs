@@ -1,0 +1,38 @@
+<%# ===== START PERSONALLY WRITTEN CODE ===== %>
+<%# View file: views/organiser/audit.ejs. Renders server-side data provided by Express routes. %>
+<%- include('../partials/header', { title: title, active: active }) %>
+<section class="card">
+    <p class="eyebrow">Extension: Audit Log</p>
+    <h1>Audit Log</h1>
+    <p>This server-side log records event creation, publication, editing, deletion, bookings, cancellations and settings changes.</p>
+    <%# Extension audit log: one row is written after important organiser/attendee actions. %>
+    <% if (auditRows.length === 0) { %>
+        <p>No audit entries yet.</p>
+    <% } else { %>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Action</th>
+                        <th>Event</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% auditRows.forEach(function(row) { %>
+                        <tr>
+                            <td><%= formatDateTime(row.created_at) %></td>
+                            <td><span class="tag"><%= row.action %></span></td>
+                            <td><%= row.event_title || 'General' %></td>
+                            <td><%= row.details %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    <% } %>
+    <a class="button secondary" href="/organiser">Back to Organiser Home Page</a>
+</section>
+<%- include('../partials/footer') %>
+<%# ===== END PERSONALLY WRITTEN CODE ===== %>

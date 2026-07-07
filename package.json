@@ -1,0 +1,23 @@
+{
+  "name": "cm2040-event-manager",
+  "version": "1.0.0",
+  "description": "CM2040 Event Manager coursework application using Express, EJS and SQLite.",
+  "main": "index.js",
+  "scripts": {
+    "build-db": "rm -f database.db && sqlite3 database.db < db_schema.sql",
+    "build-db-win": "if exist database.db del database.db && sqlite3 database.db < db_schema.sql",
+    "start": "node index.js",
+    "test": "node test/smoke.test.js"
+  },
+  "author": "Student",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.2"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

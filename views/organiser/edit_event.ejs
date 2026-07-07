@@ -1,0 +1,48 @@
+<%# ===== START PERSONALLY WRITTEN CODE ===== %>
+<%# View file: views/organiser/edit_event.ejs. Renders server-side data provided by Express routes. %>
+<%- include('../partials/header', { title: title, active: active }) %>
+<section class="card narrow">
+    <p class="eyebrow">Organiser Edit Event Page</p>
+    <h1>Edit Event</h1>
+    <p><strong>Created:</strong> <%= formatDateTime(event.created_at) %></p>
+    <p><strong>Last modified:</strong> <%= formatDateTime(event.updated_at) %></p>
+    <p><strong>Status:</strong> <span class="tag"><%= event.status %></span></p>
+
+    <%- include('../partials/errors', { errors: errors }) %>
+
+    <form action="/organiser/events/<%= event.event_id %>/edit" method="post" class="form-grid">
+        <label for="title">Event title</label>
+        <input id="title" name="title" type="text" value="<%= event.title %>" required>
+
+        <label for="description">Event description</label>
+        <textarea id="description" name="description" rows="6" required><%= event.description %></textarea>
+
+        <label for="event_date">Event date and time</label>
+        <input id="event_date" name="event_date" type="datetime-local" value="<%= String(event.event_date).replace(' ', 'T').slice(0, 16) %>" required>
+
+        <fieldset>
+            <legend>Full-price tickets</legend>
+            <label for="full_price_quantity">Number for sale</label>
+            <input id="full_price_quantity" name="full_price_quantity" type="number" min="0" value="<%= event.full_price_quantity %>" required>
+
+            <label for="full_price_price">Price</label>
+            <input id="full_price_price" name="full_price_price" type="number" min="0" step="0.01" value="<%= Number(event.full_price_price).toFixed(2) %>" required>
+        </fieldset>
+
+        <fieldset>
+            <legend>Concession tickets</legend>
+            <label for="concession_quantity">Number for sale</label>
+            <input id="concession_quantity" name="concession_quantity" type="number" min="0" value="<%= event.concession_quantity %>" required>
+
+            <label for="concession_price">Price</label>
+            <input id="concession_price" name="concession_price" type="number" min="0" step="0.01" value="<%= Number(event.concession_price).toFixed(2) %>" required>
+        </fieldset>
+
+        <div class="button-row">
+            <button class="button primary" type="submit">Submit Changes</button>
+            <a class="button secondary" href="/organiser">Back to Organiser Home Page</a>
+        </div>
+    </form>
+</section>
+<%- include('../partials/footer') %>
+<%# ===== END PERSONALLY WRITTEN CODE ===== %>

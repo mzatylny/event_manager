@@ -1,0 +1,14 @@
+<%# ===== START PERSONALLY WRITTEN CODE ===== %>
+<%# View file: views/home.ejs. Renders server-side data provided by Express routes. %>
+<%- include('partials/header', { title: title, active: active }) %>
+<section class="hero">
+    <p class="eyebrow">Main Home Page</p>
+    <h1>Event Manager Portal</h1>
+    <p>Choose the organiser side to set up and publish events, or the attendee side to browse and book published events.</p>
+    <div class="button-row">
+        <a class="button primary" href="/organiser">Go to Organiser Home Page</a>
+        <a class="button secondary" href="/attendee">Go to Attendee Home Page</a>
+    </div>
+</section>
+<%- include('partials/footer') %>
+<%# ===== END PERSONALLY WRITTEN CODE ===== %>

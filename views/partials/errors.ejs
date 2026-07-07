@@ -1,0 +1,13 @@
+<%# ===== START PERSONALLY WRITTEN CODE ===== %>
+<%# View file: views/partials/errors.ejs. Renders server-side data provided by Express routes. %>
+<% if (errors && errors.length > 0) { %>
+    <section class="alert" role="alert">
+        <h2>Please fix the following:</h2>
+        <ul>
+            <% errors.forEach(function(error) { %>
+                <li><%= error %></li>
+            <% }); %>
+        </ul>
+    </section>
+<% } %>
+<%# ===== END PERSONALLY WRITTEN CODE ===== %>

@@ -1,0 +1,22 @@
+<%# ===== START PERSONALLY WRITTEN CODE ===== %>
+<%# View file: views/organiser/settings.ejs. Renders server-side data provided by Express routes. %>
+<%- include('../partials/header', { title: title, active: active }) %>
+<section class="card narrow">
+    <p class="eyebrow">Site Settings Page</p>
+    <h1>Site Settings</h1>
+    <%- include('../partials/errors', { errors: errors }) %>
+    <form action="/organiser/settings" method="post" class="form-grid">
+        <label for="site_name">Site name</label>
+        <input id="site_name" name="site_name" type="text" value="<%= settings.site_name %>" required>
+
+        <label for="site_description">Site description</label>
+        <textarea id="site_description" name="site_description" rows="5" required><%= settings.site_description %></textarea>
+
+        <div class="button-row">
+            <button class="button primary" type="submit">Save Settings</button>
+            <a class="button secondary" href="/organiser">Back to Organiser Home Page</a>
+        </div>
+    </form>
+</section>
+<%- include('../partials/footer') %>
+<%# ===== END PERSONALLY WRITTEN CODE ===== %>

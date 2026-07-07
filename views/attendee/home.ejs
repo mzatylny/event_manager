@@ -1,0 +1,29 @@
+<%# ===== START PERSONALLY WRITTEN CODE ===== %>
+<%# View file: views/attendee/home.ejs. Renders server-side data provided by Express routes. %>
+<%- include('../partials/header', { title: title, active: active }) %>
+<section class="page-title">
+    <p class="eyebrow">Attendee Home Page</p>
+    <h1><%= settings.site_name %></h1>
+    <p><%= settings.site_description %></p>
+    <a class="button secondary" href="/attendee/booking-lookup">Look up an existing booking</a>
+</section>
+
+<section class="event-grid">
+    <% if (events.length === 0) { %>
+        <article class="card">
+            <h2>No events are published yet.</h2>
+            <p>Please check again later.</p>
+        </article>
+    <% } %>
+
+    <% events.forEach(function(event) { %>
+        <article class="event-card">
+            <p class="eyebrow"><%= formatDateTime(event.event_date) %></p>
+            <h2><%= event.title %></h2>
+            <p><%= event.description.length > 140 ? event.description.slice(0, 140) + '...' : event.description %></p>
+            <a class="button primary" href="/attendee/events/<%= event.event_id %>">View and book</a>
+        </article>
+    <% }); %>
+</section>
+<%- include('../partials/footer') %>
+<%# ===== END PERSONALLY WRITTEN CODE ===== %>

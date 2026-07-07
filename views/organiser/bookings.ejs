@@ -1,0 +1,53 @@
+<%# ===== START PERSONALLY WRITTEN CODE ===== %>
+<%# View file: views/organiser/bookings.ejs. Renders server-side data provided by Express routes. %>
+<%- include('../partials/header', { title: title, active: active }) %>
+<section class="page-title">
+    <p class="eyebrow">Extension: Organiser Booking Dashboard</p>
+    <h1><%= event.title %></h1>
+    <p><%= formatDateTime(event.event_date) %></p>
+    <%# Extension statistics: revenue and ticket counts are calculated from bookings and booking_tickets. %>
+    <div class="stats-grid">
+        <div class="stat"><span>Full-price sold</span><strong><%= event.full_price_sold %></strong></div>
+        <div class="stat"><span>Full-price remaining</span><strong><%= event.full_price_remaining %></strong></div>
+        <div class="stat"><span>Concession sold</span><strong><%= event.concession_sold %></strong></div>
+        <div class="stat"><span>Concession remaining</span><strong><%= event.concession_remaining %></strong></div>
+        <div class="stat"><span>Revenue</span><strong><%= formatMoney(event.revenue) %></strong></div>
+    </div>
+</section>
+
+<section class="card">
+    <h2>Bookings</h2>
+    <% if (bookings.length === 0) { %>
+        <p>There are no bookings for this event yet.</p>
+    <% } else { %>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Reference</th>
+                        <th>Attendee</th>
+                        <th>Booked at</th>
+                        <th>Status</th>
+                        <th>Tickets</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% bookings.forEach(function(booking) { %>
+                        <tr>
+                            <td><a href="/attendee/bookings/<%= encodeURIComponent(booking.booking_reference) %>"><%= booking.booking_reference %></a></td>
+                            <td><%= booking.attendee_name %></td>
+                            <td><%= formatDateTime(booking.booked_at) %></td>
+                            <td><span class="tag"><%= booking.status %></span></td>
+                            <td><%= booking.ticket_count %></td>
+                            <td><%= formatMoney(booking.booking_total) %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    <% } %>
+    <a class="button secondary" href="/organiser">Back to Organiser Home Page</a>
+</section>
+<%- include('../partials/footer') %>
+<%# ===== END PERSONALLY WRITTEN CODE ===== %>

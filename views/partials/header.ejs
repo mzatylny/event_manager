@@ -1,0 +1,20 @@
+<%# ===== START PERSONALLY WRITTEN CODE ===== %>
+<%# View file: views/partials/header.ejs. Renders server-side data provided by Express routes. %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/main.css">
+    <title><%= title %></title>
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" href="/">Event Manager</a>
+    <nav>
+        <a href="/organiser" class="<%= active === 'organiser' ? 'active' : '' %>">Organiser</a>
+        <a href="/attendee" class="<%= active === 'attendee' ? 'active' : '' %>">Attendee</a>
+    </nav>
+</header>
+<main class="container">
+<%# ===== END PERSONALLY WRITTEN CODE ===== %>

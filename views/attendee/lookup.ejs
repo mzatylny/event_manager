@@ -1,0 +1,18 @@
+<%# ===== START PERSONALLY WRITTEN CODE ===== %>
+<%# View file: views/attendee/lookup.ejs. Renders server-side data provided by Express routes. %>
+<%- include('../partials/header', { title: title, active: active }) %>
+<section class="card narrow">
+    <p class="eyebrow">Extension: Booking Lookup</p>
+    <h1>Look up a booking</h1>
+    <%- include('../partials/errors', { errors: errors }) %>
+    <form action="/attendee/booking-lookup" method="post" class="form-grid">
+        <label for="booking_reference">Booking reference</label>
+        <input id="booking_reference" name="booking_reference" type="text" placeholder="BK-1234ABCD" required>
+        <div class="button-row">
+            <button class="button primary" type="submit">Find booking</button>
+            <a class="button secondary" href="/attendee">Back to Attendee Home Page</a>
+        </div>
+    </form>
+</section>
+<%- include('../partials/footer') %>
+<%# ===== END PERSONALLY WRITTEN CODE ===== %>

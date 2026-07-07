@@ -1,0 +1,10 @@
+<%# ===== START PERSONALLY WRITTEN CODE ===== %>
+<%# View file: views/error.ejs. Renders server-side data provided by Express routes. %>
+<%- include('partials/header', { title: title, active: active }) %>
+<section class="card narrow">
+    <h1><%= title %></h1>
+    <p><%= message %></p>
+    <a class="button secondary" href="/">Back to Main Home Page</a>
+</section>
+<%- include('partials/footer') %>
+<%# ===== END PERSONALLY WRITTEN CODE ===== %>

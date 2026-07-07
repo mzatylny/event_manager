@@ -1,0 +1,51 @@
+<%# ===== START PERSONALLY WRITTEN CODE ===== %>
+<%# View file: views/attendee/event.ejs. Renders server-side data provided by Express routes. %>
+<%- include('../partials/header', { title: title, active: active }) %>
+<section class="card narrow">
+    <p class="eyebrow">Attendee Event Page</p>
+    <h1><%= event.title %></h1>
+    <p class="lead"><%= formatDateTime(event.event_date) %></p>
+    <p><%= event.description %></p>
+
+    <%# Ticket availability panel: values are calculated server-side to avoid hard-coded client data. %>
+    <div class="ticket-panel">
+        <div>
+            <h2>Full-price tickets</h2>
+            <p><%= formatMoney(event.full_price_price) %> each</p>
+            <p><strong><%= event.full_price_remaining %></strong> available</p>
+        </div>
+        <div>
+            <h2>Concession tickets</h2>
+            <p><%= formatMoney(event.concession_price) %> each</p>
+            <p><strong><%= event.concession_remaining %></strong> available</p>
+        </div>
+    </div>
+
+    <%- include('../partials/errors', { errors: errors }) %>
+
+    <% if (event.full_price_remaining + event.concession_remaining === 0) { %>
+        <section class="alert">
+            <h2>Sold out</h2>
+            <p>This event has no remaining tickets.</p>
+        </section>
+    <% } else { %>
+        <%# Booking form: server-side route validates all values again before creating the booking. %>
+        <form action="/attendee/events/<%= event.event_id %>/book" method="post" class="form-grid">
+            <label for="attendee_name">Your name</label>
+            <input id="attendee_name" name="attendee_name" type="text" value="<%= formValues.attendee_name || '' %>" required>
+
+            <label for="full_price_quantity">Full-price tickets</label>
+            <input id="full_price_quantity" name="full_price_quantity" type="number" min="0" max="<%= event.full_price_remaining %>" value="<%= formValues.full_price_quantity || 0 %>">
+
+            <label for="concession_quantity">Concession tickets</label>
+            <input id="concession_quantity" name="concession_quantity" type="number" min="0" max="<%= event.concession_remaining %>" value="<%= formValues.concession_quantity || 0 %>">
+
+            <div class="button-row">
+                <button class="button primary" type="submit">Book</button>
+                <a class="button secondary" href="/attendee">Back to Attendee Home Page</a>
+            </div>
+        </form>
+    <% } %>
+</section>
+<%- include('../partials/footer') %>
+<%# ===== END PERSONALLY WRITTEN CODE ===== %>
