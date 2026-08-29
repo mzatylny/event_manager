@@ -1,0 +1,15 @@
+node_modules/
+
+# Rebuild local databases with `npm run build-db`.
+database.db
+test_database.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+.env
+.env.*
+!.env.example
+.DS_Store
+npm-debug.log*
+coverage/
