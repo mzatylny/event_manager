@@ -11,6 +11,7 @@
     <%- include('../partials/errors', { errors: errors }) %>
 
     <form action="/organiser/events/<%= event.event_id %>/edit" method="post" class="form-grid">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <label for="title">Event title</label>
         <input id="title" name="title" type="text" value="<%= event.title %>" required>
 

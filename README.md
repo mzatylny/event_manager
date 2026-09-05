@@ -15,8 +15,24 @@ From the project folder run:
 ```bash
 npm install
 npm run build-db
+# Choose your own strong password; do not commit it.
+export ORGANISER_PASSWORD='replace-with-your-own-long-password'
 npm run start
 ```
+
+The server binds to `127.0.0.1` by default. Organiser pages prompt for the username
+`organiser` and the password from `ORGANISER_PASSWORD`. `ORGANISER_USERNAME` can override
+the username. Without a password, all organiser routes are disabled (HTTP 503);
+attendee pages stay available. Organiser forms include CSRF protection. Close your
+browser session to clear its cached HTTP Basic credentials.
+
+For access from other computers, explicitly set `HOST` and place the app behind HTTPS:
+HTTP Basic credentials must not cross an unencrypted network. `PORT` defaults to 3000;
+`DATABASE_PATH` can select a separate existing database.
+
+Database routes share a queue that holds the SQLite connection for each complete
+handler, including booking commit or rollback. This prevents concurrent requests from
+sharing a transaction. It is intended for this single-process coursework server.
 
 Optional pre-submission check:
 
@@ -53,7 +69,7 @@ The extension is a Smart Booking Management and Audit System. It adds:
 - transaction-based booking validation to reduce overbooking risk
 - unique booking reference checking to avoid rare reference collisions
 - organiser validation that prevents ticket totals being reduced below confirmed sales
-- a small smoke test for the database schema and booking totals
+- database smoke tests and HTTP regressions for access control, CSRF, and concurrent bookings
 
 Do not submit `node_modules` or `database.db`. The marker should be able to rebuild the database with `npm run build-db`.
 
