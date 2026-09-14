@@ -10,6 +10,7 @@
         <a class="button secondary" href="/organiser/settings">Site Settings Page</a>
         <a class="button secondary" href="/organiser/audit">View Audit Log</a>
         <form action="/organiser/events/new" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="button primary" type="submit">Create New Event</button>
         </form>
     </div>
@@ -46,6 +47,7 @@
                                 <a class="button small" href="/organiser/events/<%= event.event_id %>/edit">Edit</a>
                                 <a class="button small" href="/organiser/events/<%= event.event_id %>/bookings">Bookings</a>
                                 <form action="/organiser/events/<%= event.event_id %>/delete" method="post" onsubmit="return confirm('Delete this event?');">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                     <button class="button small danger" type="submit">Delete</button>
                                 </form>
                             </td>
@@ -85,9 +87,11 @@
                             <td class="actions">
                                 <a class="button small" href="/organiser/events/<%= event.event_id %>/edit">Edit</a>
                                 <form action="/organiser/events/<%= event.event_id %>/publish" method="post">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                     <button class="button small primary" type="submit">Publish</button>
                                 </form>
                                 <form action="/organiser/events/<%= event.event_id %>/delete" method="post" onsubmit="return confirm('Delete this draft?');">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                     <button class="button small danger" type="submit">Delete</button>
                                 </form>
                             </td>

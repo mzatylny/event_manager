@@ -1,8 +1,8 @@
 /* ===== START PERSONALLY WRITTEN CODE ===== */
 
-const express = require('express');
+const createDatabaseRouter = require('../lib/database-router');
 const crypto = require('crypto');
-const router = express.Router();
+const router = createDatabaseRouter();
 
 // Returns the SQLite database connection stored globally by index.js.
 function getDb() {

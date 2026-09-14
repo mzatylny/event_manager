@@ -7,7 +7,7 @@
     "build-db": "rm -f database.db && sqlite3 database.db < db_schema.sql",
     "build-db-win": "if exist database.db del database.db && sqlite3 database.db < db_schema.sql",
     "start": "node index.js",
-    "test": "node test/smoke.test.js"
+    "test": "node test/smoke.test.js && node test/http.test.js"
   },
   "author": "Student",
   "license": "ISC",

@@ -6,6 +6,7 @@
     <h1>Site Settings</h1>
     <%- include('../partials/errors', { errors: errors }) %>
     <form action="/organiser/settings" method="post" class="form-grid">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <label for="site_name">Site name</label>
         <input id="site_name" name="site_name" type="text" value="<%= settings.site_name %>" required>
 

@@ -9,7 +9,8 @@ const attendeeRoutes = require('./routes/attendee');
 
 // Create the Express application and configure the coursework web server.
 const app = express();
-const port = 3000;
+const port = Number(process.env.PORT || 3000);
+const host = process.env.HOST || '127.0.0.1';
 
 // Use EJS for server-side rendered pages from the views folder.
 app.set('view engine', 'ejs');
@@ -28,7 +29,7 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Open the SQLite database created by npm run build-db.
-const db = new sqlite3.Database(path.join(__dirname, 'database.db'), (err) => {
+const db = new sqlite3.Database(process.env.DATABASE_PATH || path.join(__dirname, 'database.db'), (err) => {
     if (err) {
         console.error('Could not connect to database:', err.message);
         process.exit(1);
@@ -56,7 +57,10 @@ app.get('/', (req, res) => {
 });
 
 // Mount route modules so organiser and attendee pages remain separated.
-app.use('/organiser', organiserRoutes);
+app.use('/organiser', require('./lib/organiser-access')({
+    username: process.env.ORGANISER_USERNAME || 'organiser',
+    password: process.env.ORGANISER_PASSWORD
+}), organiserRoutes);
 app.use('/attendee', attendeeRoutes);
 
 app.use((req, res) => {
@@ -76,7 +80,11 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Event Manager running at http://localhost:${port}`);
-});
+if (require.main === module) {
+    app.listen(port, host, () => {
+        console.log(`Event Manager running at http://${host}:${port}`);
+    });
+}
+
+module.exports = { app, db };
 /* ===== END PERSONALLY WRITTEN CODE ===== */
